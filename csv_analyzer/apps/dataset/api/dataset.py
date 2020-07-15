@@ -65,7 +65,7 @@ class DataSetViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, Updat
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
-        analyze_dataset_file()
+        analyze_dataset_file.delay()
 
         data = DataSetModelSerializer(dataset).data
         return Response(data=data, status=status.HTTP_200_OK)

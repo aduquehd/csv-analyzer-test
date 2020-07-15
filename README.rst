@@ -1,7 +1,9 @@
 CSV Analyzer
 ============
 
-Behold My Awesome Project!
+Csv analyzer project using PostgreSQL as main database and MongoDB to store some additional information.
+
+Also it's using Celery and Flower to execute some hard performance tasks like analyzing the csv files for data sets.
 
 .. image:: https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg
      :target: https://github.com/pydanny/cookiecutter-django/
