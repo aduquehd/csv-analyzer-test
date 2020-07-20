@@ -123,5 +123,6 @@ Create a DataSet -> `[POST] /api/dataset/`
 Create a DataSet File `[POST] /api/dataset/{data-set-id}/add-file/`
 
     {
-        "file": YourFileObject (You can found an example on Postman Collection).
+        "file": YourFileObject (You can found an example on Postman Collection).,
+        "start_date": "2011-09-27".
     }
