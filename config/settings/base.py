@@ -43,24 +43,22 @@ LOCALE_PATHS = [str(ROOT_DIR / "locale")]
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
     "default": env.db("DATABASE_URL"),
-    "mongodb": {
-        'ENGINE': 'djongo',
-        'ENFORCE_SCHEMA': True,
-        'NAME': 'django_mongodb_docker',
-        'CLIENT': {
-            'PASSWORD': 'mongoadmin',
-            'host': 'mongodb',
-            'port': 27017,
-            'username': 'root',
-            'password': 'mongoadmin',
-            'authSource': 'admin',
-            'authMechanism': 'SCRAM-SHA-1'
-        },
-    }
+    # "mongodb": {
+    #     'ENGINE': 'djongo',
+    #     'ENFORCE_SCHEMA': True,
+    #     'NAME': 'django_mongodb_docker',
+    #     'CLIENT': {
+    #         'PASSWORD': 'mongoadmin',
+    #         'host': 'mongodb',
+    #         'port': 27017,
+    #         'username': 'root',
+    #         'password': 'mongoadmin',
+    #         'authSource': 'admin',
+    #         'authMechanism': 'SCRAM-SHA-1'
+    #     },
+    # }
 }
 # DATABASES["default"]["ATOMIC_REQUESTS"] = True
-
-DATABASE_ROUTERS = ['config.database_routers.ModelMetaRouter']
 
 # URLS
 # ------------------------------------------------------------------------------
@@ -91,11 +89,13 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "djoser",
+    "drf_yasg",
 ]
 
 LOCAL_APPS = [
     "csv_analyzer.apps.users.apps.UsersConfig",
     "csv_analyzer.apps.dataset.apps.DatasetConfig",
+    "csv_analyzer.apps.mongodb.apps.MongodbConfig",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -202,7 +202,6 @@ TEMPLATES = [
                 "django.template.context_processors.static",
                 "django.template.context_processors.tz",
                 "django.contrib.messages.context_processors.messages",
-                "csv_analyzer.utils.context_processors.settings_context",
             ],
         },
     }
@@ -289,10 +288,10 @@ CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"
 # http://docs.celeryproject.org/en/latest/userguide/configuration.html#task-time-limit
 # TODO: set to whatever value is adequate in your circumstances
-CELERY_TASK_TIME_LIMIT = 5 * 60
+CELERY_TASK_TIME_LIMIT = 15 * 60
 # http://docs.celeryproject.org/en/latest/userguide/configuration.html#task-soft-time-limit
 # TODO: set to whatever value is adequate in your circumstances
-CELERY_TASK_SOFT_TIME_LIMIT = 60
+CELERY_TASK_SOFT_TIME_LIMIT = 15 * 60
 # http://docs.celeryproject.org/en/latest/userguide/configuration.html#beat-scheduler
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 # django-allauth
@@ -305,20 +304,22 @@ ACCOUNT_EMAIL_REQUIRED = False
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
 ACCOUNT_EMAIL_VERIFICATION = "optional"
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
-ACCOUNT_ADAPTER = "csv_analyzer.users.adapters.AccountAdapter"
+ACCOUNT_ADAPTER = "csv_analyzer.apps.users.adapters.AccountAdapter"
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
-SOCIALACCOUNT_ADAPTER = "csv_analyzer.users.adapters.SocialAccountAdapter"
+SOCIALACCOUNT_ADAPTER = "csv_analyzer.apps.users.adapters.SocialAccountAdapter"
 
 # django-rest-framework
 # -------------------------------------------------------------------------------
 # django-rest-framework - https://www.django-rest-framework.org/api-guide/settings/
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": (
+    'DEFAULT_AUTHENTICATION_CLASSES': (
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework.authentication.TokenAuthentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 30,
 }
 
 # Your stuff...

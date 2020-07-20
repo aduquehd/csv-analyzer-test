@@ -20,7 +20,7 @@ class CreateDataSetModelSerializer(serializers.ModelSerializer):
 class FileDataSetModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = DataSetFiles
-        fields = ('id', 'file', 'data_set')
+        fields = ('id', 'file', 'data_set', 'created', 'is_analyzed')
         read_only_fields = ('id',)
 
 
@@ -35,5 +35,6 @@ class DataSetModelSerializer(serializers.ModelSerializer):
             'is_analyzed',
             'owner',
             'files',
+            'created',
         )
         read_only_fields = fields

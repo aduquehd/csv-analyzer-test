@@ -1,29 +1,30 @@
 from config import celery_app
 
+from csv_analyzer.apps.dataset.models import DataSetFiles
+from csv_analyzer.apps.mongodb.utils import MongoDBConnection
+
+from csv_analyzer.apps.dataset.utils.analyze_file import analyze_file
+
 
 @celery_app.task()
-def analyze_dataset_file():
-    """A pointless Celery task to demonstrate usage."""
-    from csv_analyzer.apps.dataset.models import DataSetFiles, DataSet, DataSetWearerData, Blog
+def populate_dataset_file(dataset_file_id):
+    """
+    Populate dataset file data into MongoDB database.
+    :param dataset_file_id: String, dataset file ID.
+    :return: Count of documents saved.
+    """
+    dataset_file = DataSetFiles.objects.get(id=dataset_file_id)
 
-    import uuid
+    documents = analyze_file(dataset_file)
 
-    for i in range(0, 10):
-        Blog.objects.using('mongodb').create(
-            name="Andres",
-            tagline="Software engineer"
-        )
-        # DataSetWearerData.objects.using('mongodb').create(
-        #     air_pressure_9am=38465925,
-        #     air_temp_9am=3345725,
-        #     avg_wind_direction_9am=4256325,
-        #     avg_wind_speed_9am=3256795,
-        #     max_wind_direction_9am=3947625,
-        #     max_wind_speed_9am=324845,
-        #     rain_accumulation_9am=37525,
-        #     rain_duration_9am=334625,
-        #     relative_humidity_9am=323625,
-        #     relative_humidity_3pm=32355,
-        # )
+    mongo_client = MongoDBConnection()
+    delete_query = {"data_set_file_id": dataset_file_id}
 
-    return None
+    mongo_client.delete_bulk(query=delete_query)
+    mongo_client.delete_bulk(query={})
+    mongo_client.insert_record_bulk(documents=documents)
+
+    dataset_file.is_analyzed = True
+    dataset_file.save()
+
+    return len(documents)
