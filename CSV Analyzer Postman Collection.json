@@ -1,0 +1,357 @@
+{
+	"info": {
+		"_postman_id": "1db92f46-c655-4060-92c9-a84507274c07",
+		"name": "CSV Analyzer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Sign Up",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNTgyNjgzNjQ5LCJqdGkiOiI5ZmQxZGVmYWJlYTU0ZTBiOTE3ZmQwZjIzODk1ZjRiYSIsInVzZXJfaWQiOiIxZWU5YzFhYS1hNTg1LTRlYjktYTJlNC01OWUwNDY0M2FjZGQifQ.WmkCKT2zqFAwJhXumUGOklhBNn4BdwZvh1sOCId6LX8",
+								"disabled": true
+							},
+							{
+								"key": "Accept-Language",
+								"value": "es",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"test1@mail.com\",\n\t\"password\": \"abcd1234.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/auth/users/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Log in",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cac68a31-b472-469b-b4c5-424e26095a6a",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "JWT ",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Accept-Language",
+								"value": "es",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"username\": \"test1@mail.com\",\n\t\"password\": \"abcd1234.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/auth/jwt/create/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"jwt",
+								"create",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Datasets",
+			"item": [
+				{
+					"name": "Get datasets",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cac68a31-b472-469b-b4c5-424e26095a6a",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "JWT {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/dataset/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"dataset",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a Dataset",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cac68a31-b472-469b-b4c5-424e26095a6a",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "JWT {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/dataset/54c49b1e-8901-435b-9a95-2ecf5a16a415/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"dataset",
+								"54c49b1e-8901-435b-9a95-2ecf5a16a415",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create dataset",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cac68a31-b472-469b-b4c5-424e26095a6a",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "JWT {{jwt_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"My Cool Dataset #5\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/dataset/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"dataset",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create dataset file",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dc3220eb-924b-4692-865f-bd84973c9057",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "JWT {{jwt_token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/saduqz/Development/Personal/Playvox Test - SE 2020)/daily_weather.xlsx"
+								},
+								{
+									"key": "start_date",
+									"value": "2011-09-01",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/api/dataset/c88b97a9-97e0-4e4e-b72a-14facc625eec/add-file/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"dataset",
+								"c88b97a9-97e0-4e4e-b72a-14facc625eec",
+								"add-file",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

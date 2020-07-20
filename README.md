@@ -15,8 +15,18 @@ Celery is used to execute the hard processing tasks, like analyzing the csv file
 Data set API allows users to get the data sets, get a single dataset, create a data set and upload an excel file to
 a data set.
 
+The users can also filter the data inside a data set file by date range (This is the data populed from xlsx files).
+
+Also, an user can only access to his owns data sets. Can't edit or see any data sets from other users.
+
+--- 
+
 When an excel file is uploaded into a dataset, it's not analyzed immediately, instead, the file is saved and created as
 is_analyzed=False. A **Celery** task will run the job of analyzing and store the file information into MongoDB.
+
+When a dataset file is created, the started date should be specified, this is necessary for the platform
+to recognize which datetime is each row into the excel file. The users will be allowed to *filter the data sets by date
+range*, specifying 'from' and 'to' date in the API.
 
 When the DataSet API (List or Retrieve) is called, the API will return the current state of the DataSet, including the 
 data in MongoDB (if that exists).
@@ -33,11 +43,13 @@ data in MongoDB (if that exists).
                 -> file: FileField.
                 -> data_set: DataSet object relationship.
                 -> is_analyzed: Boolean.
+                -> start_date: Date to start counting the days into the excel file.
 
 ###### MongoDB structure definition
     {
         "data_set_id": "54c49b1e-8901-435b-9a95-2ecf5a16a415",
         "data_set_file_id": "8e25efb7-4d29-4038-9f28-264d1f8e8964",
+        "date": "2011-09-01T00:00:00",
         "number": 0,
         "air_pressure_9am": 918.060000000008,
         "air_temp_9am": 74.8220000000004,
@@ -76,7 +88,9 @@ You can see the API endpoints using the swagger utils on `/swagger/`, also looki
 
 (I really recommend take a look to postman collection, is the easier way to test).
 
-*Note: -> Remember replace the file for Postman in "Create dataset file with your local file.*
+Postman collection on repo name: `CSV Analyzer Postman Collection.json`
+
+*Note: -> Remember replace the file in Postman with your local file when you use the Create dataset file endpoint.*
 
 ### Authentication
 

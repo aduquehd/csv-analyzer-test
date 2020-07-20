@@ -1,9 +1,12 @@
+from datetime import datetime
+
 # Rest framework
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.mixins import RetrieveModelMixin, ListModelMixin, UpdateModelMixin, CreateModelMixin
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
+from rest_framework.permissions import IsAuthenticated
 
 # Serializers
 from csv_analyzer.apps.dataset.serializers import (
@@ -15,6 +18,9 @@ from csv_analyzer.apps.dataset.serializers import (
 # Models
 from csv_analyzer.apps.dataset.models import DataSet
 
+# Permissions
+from csv_analyzer.apps.dataset.permissions.dataset import IsDataSetOwner
+
 # Celery
 from csv_analyzer.apps.dataset.tasks import populate_dataset_file
 
@@ -23,6 +29,7 @@ from csv_analyzer.apps.mongodb.utils import MongoDBConnection
 
 
 class DataSetViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, UpdateModelMixin, GenericViewSet):
+    permission_classes = (IsAuthenticated, IsDataSetOwner)
 
     def get_queryset(self, *args, **kwargs):
         # Using prefetch related to improve query performance.
@@ -30,12 +37,51 @@ class DataSetViewSet(CreateModelMixin, ListModelMixin, RetrieveModelMixin, Updat
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
-        mongo_client = MongoDBConnection()
-        files_data = mongo_client.get_list(query={'data_set_id': str(instance.id)})
         serializer = self.get_serializer(instance)
         data = serializer.data
-        data['all_data'] = files_data
+
+        data['weather_date'] = self._get_data_set_weather_data(
+            from_date=request.GET.get('from_date'),
+            to_date=request.GET.get('to_date'),
+            data_set_id=str(instance.id)
+        )
+
         return Response(data)
+
+    @staticmethod
+    def _get_data_set_weather_data(from_date, to_date, data_set_id):
+        """
+        Get a data set's weather data.
+        :param from_date: String or None. Data Set from date filter. e.g. 2011-09-01
+        :param to_date: String or None. Data Set to date filter. e.g. 2011-09-21
+        :param data_set_id: String, Data Set Id.
+        :return: Dict with count of results and the data.
+        """
+        mongo_client = MongoDBConnection()
+
+        mongo_query = {
+            'data_set_id': data_set_id,
+        }
+
+        if from_date or to_date:
+            mongo_query['date'] = {}
+
+            if from_date:
+                from_date = datetime.strptime(from_date, '%Y-%m-%d')
+                from_date = datetime.combine(from_date.date(), datetime.min.time())
+                mongo_query['date']['$gte'] = from_date
+
+            if to_date:
+                to_date = datetime.strptime(to_date, '%Y-%m-%d')
+                to_date = datetime.combine(to_date.date(), datetime.max.time())
+                mongo_query['date']['$lt'] = to_date
+
+        files_data = mongo_client.get_list(query=mongo_query)
+
+        return {
+            'count': len(files_data),
+            'data': files_data,
+        }
 
     def get_serializer_class(self):
         """Return serializer based on action."""

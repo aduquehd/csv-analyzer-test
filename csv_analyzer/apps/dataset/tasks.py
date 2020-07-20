@@ -21,7 +21,6 @@ def populate_dataset_file(dataset_file_id):
     delete_query = {"data_set_file_id": dataset_file_id}
 
     mongo_client.delete_bulk(query=delete_query)
-    mongo_client.delete_bulk(query={})
     mongo_client.insert_record_bulk(documents=documents)
 
     dataset_file.is_analyzed = True

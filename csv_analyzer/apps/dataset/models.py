@@ -1,6 +1,6 @@
 # Django
 from django.db import models
-import django.db.models.options as options
+from django.utils import timezone
 
 # Utils
 from csv_analyzer.utils.models import BaseModel
@@ -24,3 +24,4 @@ class DataSetFiles(BaseModel):
     file = models.FileField()
     data_set = models.ForeignKey(DataSet, on_delete=models.PROTECT, related_name='files')
     is_analyzed = models.BooleanField(default=False)
+    start_date = models.DateField(default=timezone.now)

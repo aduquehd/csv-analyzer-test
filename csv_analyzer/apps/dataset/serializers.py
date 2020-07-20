@@ -18,9 +18,11 @@ class CreateDataSetModelSerializer(serializers.ModelSerializer):
 
 
 class FileDataSetModelSerializer(serializers.ModelSerializer):
+    start_date = serializers.DateField(format="%Y-%m-%d", required=True)
+
     class Meta:
         model = DataSetFiles
-        fields = ('id', 'file', 'data_set', 'created', 'is_analyzed')
+        fields = ('id', 'file', 'data_set', 'created', 'is_analyzed', 'start_date')
         read_only_fields = ('id',)
 
 
