@@ -46,7 +46,7 @@ services:
     ports:
       - "0.0.0.0:80:80"
       - "0.0.0.0:443:443"
-#      - "0.0.0.0:5555:5555"
+  #      - "0.0.0.0:5555:5555"
 
   redis:
     image: redis:5.0
@@ -83,7 +83,7 @@ services:
     container_name: mongodb
     volumes:
       - ./init-db:/docker-entrypoint-initdb.d
-      - ./data-db:/data/db
+    #      - ./data-db:/data/db
     #      - local_mongodb_data:/data/db
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
