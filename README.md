@@ -15,7 +15,11 @@ Celery is used to execute the hard processing tasks, like analyzing the csv file
 Data set API allows users to get the data sets, get a single dataset, create a data set and upload an excel file to
 a data set.
 
-The users can also filter the data inside a data set file by date range (This is the data populed from xlsx files).
+The users can also filter the data inside a data set file by date range (This is the data created from xlsx files).
+
+The way to filter the a dataset with the file data is `/?from_date=2011-09-01&to_date=2011-09-10`
+(You can see this example in Postman example file)
+
 
 Also, an user can only access to his owns data sets. Can't edit or see any data sets from other users.
 
@@ -23,6 +27,15 @@ Also, an user can only access to his owns data sets. Can't edit or see any data 
 
 When an excel file is uploaded into a dataset, it's not analyzed immediately, instead, the file is saved and created as
 is_analyzed=False. A **Celery** task will run the job of analyzing and store the file information into MongoDB.
+
+You can access to Flower to see the Celery tasks going to `localhost:5555`.
+
+The credentiales are:
+
+user: FoFIHmckJNlHpsfzgHjJEvnzkfAlbLEG
+
+password: olNF0trNzE4VOQvir7bYqPbjG0b0WYYfokBfLnMLTaMMZqXrE6vu0wlz4peuF1Yo
+
 
 When a dataset file is created, the started date should be specified, this is necessary for the platform
 to recognize which datetime is each row into the excel file. The users will be allowed to *filter the data sets by date
@@ -113,6 +126,10 @@ SignUp -> `[POST] /api/auth/jwt/create/`
 Get User's DataSets -> `[GET] /api/dataset/`
 
 Get a DataSet -> `[GET] /api/dataset/{data-set-id}`
+
+Get a DataSet by date range -> `[GET] /api/dataset/{data-set-id}?from_date=2011-09-01&to_date=2011-09-27`
+
+    (The format is "year-month-day") 
 
 Create a DataSet -> `[POST] /api/dataset/`
 
