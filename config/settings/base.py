@@ -43,22 +43,7 @@ LOCALE_PATHS = [str(ROOT_DIR / "locale")]
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
     "default": env.db("DATABASE_URL"),
-    # "mongodb": {
-    #     'ENGINE': 'djongo',
-    #     'ENFORCE_SCHEMA': True,
-    #     'NAME': 'django_mongodb_docker',
-    #     'CLIENT': {
-    #         'PASSWORD': 'mongoadmin',
-    #         'host': 'mongodb',
-    #         'port': 27017,
-    #         'username': 'root',
-    #         'password': 'mongoadmin',
-    #         'authSource': 'admin',
-    #         'authMechanism': 'SCRAM-SHA-1'
-    #     },
-    # }
 }
-# DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
 # URLS
 # ------------------------------------------------------------------------------

@@ -71,3 +71,18 @@ services:
       - ./.envs/.production/.django
     volumes:
       - production_postgres_data_backups:/backups
+
+  mongodb:
+    image: mongo
+    restart: always
+    container_name: mongodb
+    volumes:
+      - ./init-db:/docker-entrypoint-initdb.d
+      - ./data-db:/data/db
+#      - local_mongodb_data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: mongoadmin
+      MONGO_INITDB_DATABASE: django_mongodb_docker
+    ports:
+      - 27017:27017
