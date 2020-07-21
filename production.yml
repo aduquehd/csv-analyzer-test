@@ -1,6 +1,7 @@
 version: '3'
 
 volumes:
+  local_mongodb_data: {}
   production_postgres_data: {}
   production_postgres_data_backups: {}
   production_traefik: {}
@@ -11,9 +12,12 @@ services:
       context: .
       dockerfile: ./compose/production/django/Dockerfile
     image: csv_analyzer_production_django
+    links:
+      - mongodb
     depends_on:
       - postgres
       - redis
+      - mongodb
     env_file:
       - ./.envs/.production/.django
       - ./.envs/.production/.postgres
