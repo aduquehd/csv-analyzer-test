@@ -33,7 +33,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"username\": \"test1@mail.com\",\n\t\"password\": \"abcd1234.\"\n}",
+							"raw": "{\n\t\"username\": \"test2@mail.com\",\n\t\"password\": \"abcd1234.\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -92,7 +92,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"username\": \"test1@mail.com\",\n\t\"password\": \"abcd1234.\"\n}",
+							"raw": "{\n\t\"username\": \"test2@mail.com\",\n\t\"password\": \"abcd1234.\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -218,15 +218,26 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/api/dataset/54c49b1e-8901-435b-9a95-2ecf5a16a415/",
+							"raw": "{{host}}/api/dataset/de77de0c-8971-481d-bbca-f16269606063/?from_date=2011-09-01",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
 								"dataset",
-								"54c49b1e-8901-435b-9a95-2ecf5a16a415",
+								"de77de0c-8971-481d-bbca-f16269606063",
 								""
+							],
+							"query": [
+								{
+									"key": "from_date",
+									"value": "2011-09-01"
+								},
+								{
+									"key": "to_date",
+									"value": "2011-09-10",
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -263,7 +274,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"My Cool Dataset #5\"\n}",
+							"raw": "{\n    \"name\": \"My Cool Dataset A#1\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -334,14 +345,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}/api/dataset/c88b97a9-97e0-4e4e-b72a-14facc625eec/add-file/",
+							"raw": "{{host}}/api/dataset/de77de0c-8971-481d-bbca-f16269606063/add-file/",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"api",
 								"dataset",
-								"c88b97a9-97e0-4e4e-b72a-14facc625eec",
+								"de77de0c-8971-481d-bbca-f16269606063",
 								"add-file",
 								""
 							]
