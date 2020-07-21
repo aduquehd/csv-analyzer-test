@@ -24,7 +24,10 @@ class DataSetFileTest(APITestCase):
         url = f"{self.url}{str(dataset.id)}/add-file/"
 
         with open("csv_analyzer/apps/dataset/tests/files/daily_weather_test.xlsx", 'rb') as fp:
-            post_data = {'file': fp}
+            post_data = {
+                'file': fp,
+                'start_date': "2011-09-01",
+            }
             response = self.client.post(url, post_data, format='multipart')
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)

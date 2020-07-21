@@ -27,12 +27,6 @@ urlpatterns = [
     path("users/", include("csv_analyzer.apps.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
-
-    # Rest Auth
-    # Authentication (Djoser)
-    re_path(r'^auth/', include('djoser.urls')),
-    re_path(r'^auth/', include('djoser.urls.jwt')),
-
 ]
 
 # API URLS
