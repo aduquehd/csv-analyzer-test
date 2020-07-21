@@ -48,7 +48,7 @@ http:
         certResolver: letsencrypt
 
     flower-secure-router:
-      rule: "Host(`saduqz.com`)"
+      rule: "Host(`flower.saduqz.com`)"
       entryPoints:
         - flower
       service: flower
