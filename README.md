@@ -83,6 +83,8 @@ Steps to run the complete environment locally (Django, PostgreSQL, Celery, Redis
 
     docker-compose -f local.yml build
     
+    docker-compose -f local.yml run --rm django python3 manage.py migrate
+    
     docker-compose -f local.yml up
     
 > Now the app will be running on port 8000.
